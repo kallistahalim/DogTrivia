@@ -1,86 +1,75 @@
-//GLOBAL VARIABLES
-var numWin = 0;
-var numLose = 0;
-var wordToGuess = ["Coco", "Puma", "Treats", "Bandana", "Cuddles", "Pets", "Mommy", "Dog", "Ball", "Cookies", "Ice Cream"];
-var numberOfGuess = 9;
-var yourGuess = [];
-var wordDisplay = [];
-var computerChoice = wordToGuess[Math.floor(Math.random() * wordToGuess.length)].toUpperCase();
-var wordToLetters = computerChoice.split("");
+var content = [{
+        question: "When did Coco get adopted?",
+        options: ["Jan 10, 2018", "Jan 13, 2018", "February 3, 2018", "Jan 23, 2018"],
+        answer: options[1],
+        IsDisplayed: true
 
 
-//START THE GAME
-
-function startGame() {
-    //set up initial state before game is played
-    computerChoice = wordToGuess[Math.floor(Math.random() * wordToGuess.length)].toUpperCase();
-    wordToLetters = computerChoice.split("");
-    wordDisplay = [];
-    numberOfGuess = 9;
-    yourGuess = [];
-
-    //create _ _ _ _ based on how many letters in the word
-    for (var i = 0; i < wordToLetters.length; i++) {
-        wordDisplay.push("_");
+    },
+    {
+        question: "What's the name of Coco's rescue center?",
+        options: ["SPCA", "Wonder Dog Rescue", "Rocket Dog Rescue", "Family Dog Rescue"],
+        answer: options[3],
+        IsDisplayed: true
+    },
+    {
+        question: "Which trick does Coco hate?",
+        options: ["turn", "snoot", "roll over", "sleep"],
+        answer: options[2],
+        IsDisplayed: true
+    },
+    {
+        question: "How many dog beds does Coco have?",
+        options: ["5", "4", "3", "6"],
+        answer: options[0],
+        IsDisplayed: true
+    },
+    {
+        question: "Where does Coco like to swim?",
+        options: ["In a pond with duckies", "At the sea", "In a lake near home", "Nowhere!She hates water!"],
+        answer: options[3],
+        IsDisplayed: true
     }
+];
 
-    //print innerHTML
-    document.querySelector("#win").innerHTML = numWin;
-    document.querySelector("#lose").innerHTML = numLose;
-    document.querySelector("#wordToGuess").innerHTML = wordDisplay.join(" ");
-    document.querySelector("#numberOfGuess").innerHTML = numberOfGuess;
-    document.querySelector("#yourGuess").innerHTML = yourGuess;
+var correct;
+var wrong;
+var firstQuestion;
+var questionUsed;
 
-    //tests
-    console.log("this is computerChoice: " + computerChoice);
-    // console.log("this is wordToLetters: " + wordToLetters);
-    // console.log("this is wordDisplay: " + wordDisplay);
-}
 
-startGame();
+function startTrivia() {
+    //Scores
+    correct = 0;
+    $("#correct").html("Correct:" + correct);
+    wrong = 0;
+    $("#wrong").html("Wrong:" + wrong);
 
-document.onkeypress = function (event) {
-    var letter = event.key.toUpperCase();
+    randomNumber = Math.floor(Math.random() * content.length);
 
-    for (var j = 0; j < yourGuess.length; j++) {
-        if (yourGuess[j] === letter) {
-            return false;
-        }
+    //First Question
+    if (content[randomNumber].IsDisplayed === true) {
+        firstQuestion = content[randomNumber].question;
+        content[randomNumber].question = false;
     }
+    $("#question").html(firstQuestion);
 
-    yourGuess.push(letter);
-    document.querySelector("#yourGuess").innerHTML = yourGuess;
-
-    numberOfGuess--;
-    document.querySelector("#numberOfGuess").innerHTML = numberOfGuess;
-
-
-    for (var i = 0; i < wordToLetters.length; i++) {
-
-        if (letter === wordToLetters[i]) {
-            wordDisplay[i] = letter;
-            // console.log("this is wordDisplay while we are playing: " + wordDisplay);
-            // console.log("this is wordToLetters while we are playing: " + wordToLetters);
-            document.querySelector("#wordToGuess").innerHTML = wordDisplay.join(" ");
-        }
-    }
-
-    if (wordDisplay.join("") === wordToLetters.join("")) {
-        numWin++;
-        document.querySelector("#win").innerHTML = numWin;
-
-        setTimeout(function () {
-            var confirmResult = confirm("You Win! Play Again?");
-            if (confirmResult) {
-                startGame();
-            };
-        }, 100);
-    }
-
-    if (numberOfGuess === 0) {
-        numLose++;
-        document.querySelector("#lose").innerHTML = numLose;
-        startGame();
+    //display options
+    for (var i = 0; i < content.length - 1; i++) {
+        var b = $("<button>");
+        b.addClass("question-button");
+        b.text(content[randomNumber].options[i]);
+        $("#options").append(b);
     }
 
 }
+
+startTrivia();
+
+
+
+$(".question-button").on("click", function() {
+    
+
+    
+})

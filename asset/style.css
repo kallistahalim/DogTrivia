@@ -1,5 +1,5 @@
 html {
-    background-image: url("./img/background.jpg");
+    /* background-image: url("./img/background.jpg"); */
     height:100%;
     width:100%;
     background-repeat: no-repeat;
@@ -15,4 +15,8 @@ p {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     font-style: bold;
+}
+
+.display-4 {
+    text-align: center;
 }
