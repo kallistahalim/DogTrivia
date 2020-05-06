@@ -34,6 +34,8 @@ var content = [{
 var correct;
 var wrong;
 var questionPrinted;
+var time = 10;
+var isCalled = true;
 
 
 
@@ -45,15 +47,32 @@ function startTrivia() {
     $("#wrong").html("Wrong:" + wrong);
     questionRendered();
 
-}
+    time = 10;
+    $("#time").html(time + " second(s) left")
 
+}
 startTrivia();
 
 
+function timer() {
+    time = 10;
+
+    if (isCalled) {
+        setInterval(count, 1000);
+        isCalled = false;
+    }
+
+    function count() {
+        time--;
+        $("#time").html(time + " second(s) left");
+    }
+}
 
 
 function questionRendered() {
-    var unusedQuestions = content.filter(function(pieceOfContent) {
+    timer();
+
+    var unusedQuestions = content.filter(function (pieceOfContent) {
         return pieceOfContent.IsDisplayed;
     });
     var randomNumber = Math.floor(Math.random() * unusedQuestions.length);
@@ -80,20 +99,25 @@ function questionRendered() {
             wrong++;
             $("#wrong").html("Wrong:" + wrong);
         }
-
+        
         unusedQuestions[randomNumber].IsDisplayed = false;
         $("#options").empty();
 
         if (correct === 5 && wrong === 0) {
-            alert("congrats! you know Coco so well!")
+            alert("congrats! you know Coco so well!");
+            
         } else if (correct === 4 && wrong === 1) {
             alert("You are almost there!")
+            
         } else if (correct === 3 && wrong === 2) {
             alert("You are on your way to know Coco more!")
+            
         } else if (correct === 2 && wrong === 3) {
             alert("Cmon you are better than that!")
+            
         } else if (correct === 1 && wrong === 4) {
             alert("I guess you only met her once!")
+            
         } else if (correct === 0 && wrong === 5) {
             alert("Who are you?");
         } else {
