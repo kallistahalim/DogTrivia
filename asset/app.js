@@ -67,6 +67,11 @@ function timer() {
     function count() {
         time--;
         $("#time").html(time + " second(s) left");
+
+        if(time === 0) {
+            wrong++;
+            questionRendered();
+        }
     }
 }
 
@@ -82,6 +87,7 @@ function playAgain() {
 
 function questionRendered() {
     timer();
+    
 
     var unusedQuestions = content.filter(function (pieceOfContent) {
         return pieceOfContent.IsDisplayed;
@@ -93,6 +99,7 @@ function questionRendered() {
     $("#question").html(questionPrinted);
 
     //print options
+    $("#options").empty();
     for (var i = 0; i < unusedQuestions[randomNumber].options.length; i++) {
         var b = $("<button>");
         b.addClass("question-button");
@@ -112,7 +119,7 @@ function questionRendered() {
         }
         
         unusedQuestions[randomNumber].IsDisplayed = false;
-        $("#options").empty();
+       
 
         if (correct === 5 && wrong === 0) {
             alert("congrats! you know Coco so well!");
