@@ -44,20 +44,18 @@ function startTrivia() {
     wrong = 0;
     $("#wrong").html("Wrong:" + wrong);
 
-    for(var i = 0; i < content.length; i++) {
+    for (var i = 0; i < content.length; i++) {
         content[i].IsDisplayed = true;
     }
 
     questionRendered();
-
-    time = 10;
-    $("#time").html(time + " second(s) left")
 
 }
 startTrivia();
 
 function timer() {
     time = 10;
+    $("#time").html(time + " seconds left")
 
     if (isCalled) {
         setInterval(count, 1000);
@@ -66,29 +64,39 @@ function timer() {
 
     function count() {
         time--;
-        $("#time").html(time + " second(s) left");
 
-        if(time === 0) {
+        if (time === 1) {
+            $("#time").html(time + " second left");
+        } else {
+            $("#time").html(time + " seconds left");
+        }
+
+        if (time === 0) {
             wrong++;
             $("#wrong").html("Wrong:" + wrong);
             questionRendered();
+
+            // if(wrong === 5) {
+            //     alert("Who are you?");
+            //     playAgain();
+
+            // }
         }
     }
 }
 
 function playAgain() {
     var result = confirm("Play again?");
-    if(result) {
+    if (result) {
         startTrivia();
     } else {
-        window.location.href="about:blank";
+        window.location.href = "about:blank";
     }
 }
 
 
 function questionRendered() {
     timer();
-    
 
     var unusedQuestions = content.filter(function (pieceOfContent) {
         return pieceOfContent.IsDisplayed;
@@ -118,28 +126,28 @@ function questionRendered() {
             wrong++;
             $("#wrong").html("Wrong:" + wrong);
         }
-        
+
         unusedQuestions[randomNumber].IsDisplayed = false;
-       
+
 
         if (correct === 5 && wrong === 0) {
             alert("congrats! you know Coco so well!");
-            
+
         } else if (correct === 4 && wrong === 1) {
             alert("You are almost there!")
-            
+
         } else if (correct === 3 && wrong === 2) {
             alert("You are on your way to know Coco more!")
-            
+
         } else if (correct === 2 && wrong === 3) {
             alert("Cmon you are better than that!")
-            
+
         } else if (correct === 1 && wrong === 4) {
             alert("I guess you only met her once!")
-            
+
         } else if (correct === 0 && wrong === 5) {
             alert("Who are you?");
-            
+
         } else {
             questionRendered();
             return;
