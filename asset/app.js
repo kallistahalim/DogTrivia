@@ -37,14 +37,17 @@ var questionPrinted;
 var time = 10;
 var isCalled = true;
 
-
-
 function startTrivia() {
     //Scores
     correct = 0;
     $("#correct").html("Correct:" + correct);
     wrong = 0;
     $("#wrong").html("Wrong:" + wrong);
+
+    for(var i = 0; i < content.length; i++) {
+        content[i].IsDisplayed = true;
+    }
+
     questionRendered();
 
     time = 10;
@@ -52,7 +55,6 @@ function startTrivia() {
 
 }
 startTrivia();
-
 
 function timer() {
     time = 10;
@@ -65,6 +67,15 @@ function timer() {
     function count() {
         time--;
         $("#time").html(time + " second(s) left");
+    }
+}
+
+function playAgain() {
+    var result = confirm("Play again?");
+    if(result) {
+        startTrivia();
+    } else {
+        window.location.href="about:blank";
     }
 }
 
@@ -120,9 +131,13 @@ function questionRendered() {
             
         } else if (correct === 0 && wrong === 5) {
             alert("Who are you?");
+            
         } else {
             questionRendered();
+            return;
         }
+
+        playAgain();
     })
 
 
