@@ -70,6 +70,7 @@ function timer() {
 
         if(time === 0) {
             wrong++;
+            $("#wrong").html("Wrong:" + wrong);
             questionRendered();
         }
     }
